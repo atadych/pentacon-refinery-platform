@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ block.super }} - Histories
+{% endblock %}
+
+{% block subheader %}
+{{ instance }} &gt; <a href="">Histories</a>  
+{% endblock %}
+
+{% block content %}
+{% if histories %}	
+    <ul>
+    {% for history in histories %}
+        <li><a href="{{ history.identifier }}">{{ history.identifier }} - {{ history.name }} ( {{ history.items|length }} ): {{ history.state }}</a></li>
+	    <ul>
+	    {% for item in history.items %}
+	        <li><a href="{{data_url}}/{{ item.identifier }}">{{ item.name }}: {{ item.state }}</a></li>
+	    {% endfor %}
+	    </ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No histories available.</p>
+{% endif %}
+{% endblock %}

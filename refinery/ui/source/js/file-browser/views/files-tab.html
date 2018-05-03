@@ -1,0 +1,67 @@
+<div class="dataSetTabContent" id="files">
+  <!-- filters and content  -->
+  <div class="row y-scrollable">
+    <div
+      class="col-lg-3 col-md-3 col-sm-4 p-r-1"
+      ng-if="!FBCtrl.collapsedToolPanel">
+        <rp-tool-display></rp-tool-display>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-3 p-r-1">
+      <div class="row"
+        id="tool-panel-show-button">
+        <span ng-if="FBCtrl.userPerms == 'read' || FBCtrl.userPerms == 'change'">
+          <button
+            class="btn btn-primary btn-sm"
+            data-target="#tool-launch-panel"
+            ng-click="FBCtrl.toggleToolPanel()">
+            <span ng-if="FBCtrl.collapsedToolPanel">
+              <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+               Show Tool Panel
+            </span>
+            <span ng-if="!FBCtrl.collapsedToolPanel">
+              <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+               Hide Tool Panel
+            </span>
+          </button>
+        </span>
+        <span class="float-right content">
+          <span
+            ng-if="FBCtrl.isOwner"
+            class="refinery-base btn btn-default btn-sm"
+            ng-click="FBCtrl.openPermissionEditor()"
+            refinery-tooltip
+            refinery-tooltip-container="body"
+            refinery-tooltip-placement="bottom"
+            title="Update the data set's permissions">
+            <i class="fa fa-share-square-o"></i>
+            <span id="share-button-text"></span>
+          </span>
+          <span
+            ng-if="FBCtrl.isOwner"
+            class="refinery-base btn btn-default btn-sm m-l-1-4"
+            rp-assay-files-util-modal
+            refinery-tooltip
+            refinery-tooltip-container="body"
+            refinery-tooltip-placement="bottom"
+            title="Update the data set's configuration.">
+            <i class="fa fa-wrench"></i>
+            <span id="config-button-text"></span>
+          </span>
+        </span>
+
+      </div>
+      <div id="table-filter" class="row">
+        <div id="filter-panel-body">
+          <rp-file-browser-assay-filters>
+          </rp-file-browser-assay-filters>
+        </div>
+      </div>
+    </div>
+    <div
+      ng-class="{'col-lg-7 col-md-7 col-sm-5': !FBCtrl.collapsedToolPanel,
+      'col-lg-10 col-md-10 col-sm-9': FBCtrl.collapsedToolPanel}"
+      id="main-area">
+      <rp-file-browser-assay-files></rp-file-browser-assay-files>
+    </div>
+  </div>
+</div>

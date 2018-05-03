@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ block.super }} - User {{ profile_user.username }}
+{% endblock %}
+
+{% block subheader %}
+<div class="page-header">
+<h1>User&nbsp;<small>{{ profile_user.username }}</small></h1>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="refinery-panel refinery-panel-content scrollable jquery-full-height">
+	<div class="row">
+	{% if user %}
+		<div class="refinery-header">
+			<span class="refinery-header-left">
+				<h3 id="user-profile-name">Profile for {{profile_user.username}}</h3>
+			</span>
+		</div>
+
+		<div class="refinery-subheader">
+			<h4>First Name</h4>
+		</div>
+		<p>{% if profile_user.first_name %} {{ profile_user.first_name }} {% else %} <i>None provided.</i>{% endif %}</p>
+
+		<div class="refinery-subheader">
+			<h4>Last Name</h4>
+		</div>
+		<p>{% if profile_user.last_name %} {{ profile_user.last_name }} {% else %} <i>None provided.</i>{% endif %}</p>
+
+		<div class="refinery-subheader">
+			<h4>Email</h4>
+		</div>
+		<p>{% if profile_user.email %} {{ profile_user.email }} {% else %} <i>None provided.</i>{% endif %}</p>
+
+		<div class="refinery-subheader">
+			<h4>Affiliation</h4>
+		</div>
+		<p>{% if profile_user.profile.affiliation %} {{ profile_user.profile.affiliation }} {% else %} <i>None provided.</i>{% endif %}</p>
+    {% if user == profile_user %}
+      <div class="refinery-subheader">
+        <h4>Password</h4>
+      </div>
+      {% if REFINERY_EXTERNAL_AUTH %}
+        <p>{{ REFINERY_EXTERNAL_AUTH_MESSAGE|safe }}</p>
+      {% else %}
+        <p><i class="fa fa-key"></i>&nbsp;<a href="{% url 'django.contrib.auth.views.password_change' %}">Change Password?</a></p>
+      {% endif %}
+    {% endif %}
+		{% if profile_user.groups.count > 0 %}
+			<div class="refinery-header">
+				<span class="refinery-header-left">
+					<h3>Groups</h3>
+				</span>
+			</div>
+		    <p>
+			{% for group in profile_user.groups.all %}
+		       	<a href="{% url 'group' group.extendedgroup.uuid %}">{{ group.name }}</a></br>
+		   	{% endfor %}
+		   	</p>
+		{% endif %}
+
+		<div class="refinery-header">
+			<span class="refinery-header-left">
+				<h3>History</h3>
+			</span>
+		</div>
+		<p>Joined on {{ profile_user.date_joined }} Last login on {{ profile_user.last_login }}</p>
+    {% if user == profile_user %}
+		  <a id="user-profile-edit" class="refinery-base btn btn-default"
+        href="{% url 'user_edit' profile_user.profile.uuid %}">Edit</a>
+    {% endif %}
+	{% else %}
+	    <p>No valid user.</p>
+	{% endif %}
+
+	</div>
+</div>
+
+{% endblock %}
+

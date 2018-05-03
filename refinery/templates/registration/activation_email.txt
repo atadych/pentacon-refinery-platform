@@ -1,0 +1,11 @@
+{% load humanize %}
+Dear Admin,
+{{ registered_user_full_name }} signed up for a new account at {{site}} with username: {{ registered_user_username }} and email: {{ registered_user_email }}.
+
+Their affiliation is with: {{ registered_user_affiliation }}.
+
+If they meet the proper requirements, please activate their account by clicking this link below.
+
+http://{{ site }}{% url 'registration.views.activate' activation_key %}
+
+If you don't take any action, the account in question will expire automatically in {{ expiration_days }} days.

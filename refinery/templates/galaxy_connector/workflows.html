@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ block.super }} - Workflows
+{% endblock %}
+
+{% block subheader %}
+Workflows for {{ instance }}
+{% endblock %}
+
+{% block content %}
+{% if workflows %}	
+    <ul>
+    {% for workflow in workflows %}
+        <li>{{ workflow }}</li>
+	    <ul>
+	    {% for input in workflow.inputs %}
+	        <li>{{ input }}</li>	        
+	    {% endfor %}
+	    </ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No workflows available.</p>
+{% endif %}
+{% endblock %}
